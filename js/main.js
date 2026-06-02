@@ -4,11 +4,14 @@
   const navToggle = document.querySelector("[data-nav-toggle]");
   const navMenu = document.querySelector("[data-nav-menu]");
   const siteHeader = document.querySelector(".site-header");
+  const mobileQuery = window.matchMedia("(max-width: 1040px)");
   const backTop = document.querySelector("[data-back-top]");
   const quoteForm = document.querySelector("[data-quote-form]");
   const galleryGrid = document.querySelector("[data-gallery-grid]");
   const galleryFilters = document.querySelectorAll("[data-gallery-filter]");
   const serviceSelect = document.querySelector("[data-service-select]");
+  const navOpenLabel = navToggle ? navToggle.getAttribute("aria-label") || "Abrir menu" : "Abrir menu";
+  const navCloseLabel = navOpenLabel.toLowerCase().includes("open") ? "Close menu" : "Cerrar menu";
 
   function setScrolledState() {
     if (!header) return;
@@ -16,11 +19,30 @@
     if (backTop) backTop.classList.toggle("is-visible", window.scrollY > 420);
   }
 
-  function closeMenu() {
+  function setMegaOpen(isOpen) {
+    if (!siteHeader) return;
+    const shouldOpen = Boolean(isOpen && !mobileQuery.matches);
+    siteHeader.classList.toggle("mega-open", shouldOpen);
+
+    const mega = siteHeader.querySelector(".mega-panel");
+    if (mega) mega.setAttribute("aria-hidden", String(!shouldOpen));
+
+    siteHeader.querySelectorAll("[data-mega-trigger]").forEach((trigger) => {
+      trigger.setAttribute("aria-expanded", String(shouldOpen));
+    });
+  }
+
+  function setMenuOpen(isOpen) {
     if (!navMenu || !navToggle) return;
-    navMenu.classList.remove("is-open");
-    navToggle.setAttribute("aria-expanded", "false");
-    root.classList.remove("nav-open");
+    navMenu.classList.toggle("is-open", isOpen);
+    navToggle.setAttribute("aria-expanded", String(isOpen));
+    navToggle.setAttribute("aria-label", isOpen ? navCloseLabel : navOpenLabel);
+    root.classList.toggle("nav-open", isOpen);
+    if (isOpen) setMegaOpen(false);
+  }
+
+  function closeMenu() {
+    setMenuOpen(false);
   }
 
   function getBasePath() {
@@ -34,7 +56,10 @@
     const base = getBasePath();
     const mega = document.createElement("div");
     mega.className = "mega-panel";
+    mega.id = "site-mega-menu";
+    mega.setAttribute("role", "navigation");
     mega.setAttribute("aria-label", "Menu tecnico ampliado");
+    mega.setAttribute("aria-hidden", "true");
     mega.innerHTML = `
       <div class="container mega-panel__inner">
         <div class="mega-panel__intro">
@@ -80,6 +105,14 @@
     `;
     siteHeader.appendChild(mega);
 
+    const mobileClose = document.createElement("button");
+    mobileClose.className = "mobile-nav-close";
+    mobileClose.type = "button";
+    mobileClose.dataset.navClose = "true";
+    mobileClose.setAttribute("aria-label", navCloseLabel);
+    mobileClose.innerHTML = "<span></span>";
+    navMenu.appendChild(mobileClose);
+
     const mobilePanel = document.createElement("div");
     mobilePanel.className = "mobile-nav-panel";
     mobilePanel.innerHTML = `
@@ -100,39 +133,58 @@
       <div class="mobile-nav-note">ONAC 23-OIN-020 | ISO/IEC 17020:2012</div>
     `;
     navMenu.appendChild(mobilePanel);
+    mobileClose.addEventListener("click", closeMenu);
 
     [...navMenu.children].forEach((child) => {
       if (child.matches && child.matches("a")) child.classList.add("nav-link");
     });
 
-    const openTargets = [...navMenu.querySelectorAll('a[href*="servicios"], a[href*="alcance"], a[href*="acreditacion"]')];
+    const openTargets = [...navMenu.children].filter((child) => (
+      child.matches && child.matches('a[href*="servicios"], a[href*="alcance"], a[href*="acreditacion"]')
+    ));
     let closeTimer;
     const openMega = () => {
-      if (window.matchMedia("(max-width: 1040px)").matches) return;
       clearTimeout(closeTimer);
-      siteHeader.classList.add("mega-open");
+      setMegaOpen(true);
     };
     const scheduleClose = () => {
       clearTimeout(closeTimer);
-      closeTimer = setTimeout(() => siteHeader.classList.remove("mega-open"), 140);
+      closeTimer = setTimeout(() => setMegaOpen(false), 160);
     };
     openTargets.forEach((link) => {
+      link.classList.add("nav-link--mega");
+      link.dataset.megaTrigger = "true";
+      link.setAttribute("aria-haspopup", "true");
+      link.setAttribute("aria-expanded", "false");
+      link.setAttribute("aria-controls", "site-mega-menu");
       link.addEventListener("mouseenter", openMega);
       link.addEventListener("focus", openMega);
+      link.addEventListener("keydown", (event) => {
+        if (event.key !== "ArrowDown") return;
+        event.preventDefault();
+        openMega();
+        mega.querySelector("a")?.focus();
+      });
+    });
+    navMenu.querySelectorAll(".nav-link:not([data-mega-trigger])").forEach((link) => {
+      link.addEventListener("mouseenter", scheduleClose);
     });
     mega.addEventListener("mouseenter", openMega);
     mega.addEventListener("mouseleave", scheduleClose);
+    mega.addEventListener("focusin", openMega);
     navMenu.addEventListener("mouseleave", scheduleClose);
+    siteHeader.addEventListener("mouseleave", scheduleClose);
+    siteHeader.addEventListener("focusout", (event) => {
+      if (!siteHeader.contains(event.relatedTarget)) setMegaOpen(false);
+    });
     siteHeader.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") siteHeader.classList.remove("mega-open");
+      if (event.key === "Escape") setMegaOpen(false);
     });
   }
 
   if (navToggle && navMenu) {
     navToggle.addEventListener("click", () => {
-      const isOpen = navMenu.classList.toggle("is-open");
-      navToggle.setAttribute("aria-expanded", String(isOpen));
-      root.classList.toggle("nav-open", isOpen);
+      setMenuOpen(!navMenu.classList.contains("is-open"));
     });
 
     navMenu.addEventListener("click", (event) => {
@@ -140,7 +192,9 @@
     });
 
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") closeMenu();
+      if (event.key !== "Escape") return;
+      closeMenu();
+      setMegaOpen(false);
     });
 
     document.addEventListener("click", (event) => {
@@ -153,14 +207,17 @@
   enhanceNavigation();
 
   if (new URLSearchParams(window.location.search).get("nav") === "open" && navMenu && navToggle) {
-    navMenu.classList.add("is-open");
-    navToggle.setAttribute("aria-expanded", "true");
-    root.classList.add("nav-open");
+    setMenuOpen(true);
   }
 
   if (new URLSearchParams(window.location.search).get("mega") === "open" && siteHeader) {
-    siteHeader.classList.add("mega-open");
+    setMegaOpen(true);
   }
+
+  mobileQuery.addEventListener("change", () => {
+    closeMenu();
+    setMegaOpen(false);
+  });
 
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
     link.addEventListener("click", (event) => {
