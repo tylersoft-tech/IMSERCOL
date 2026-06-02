@@ -1,0 +1,20 @@
+# IMSERCOL - paquete de referencia visual y ONAC
+
+Contenido:
+
+- `logos_onac/`: recortes PNG del logo ONAC desde el certificado oficial 23-OIN-020.
+- `certificado_onac/`: PDF del certificado ONAC 23-OIN-020 y portada renderizada en PNG.
+- `pantallazos_textuales/`: imagenes PNG tipo pantallazo textual de las paginas principales actuales.
+- `inventario/imagenes_actuales_urls.csv`: listado de las imagenes publicas vistas en el sitio actual.
+- `inventario/visor_imagenes_actuales.html`: visor para abrir en navegador y ver las imagenes desde sus URLs originales.
+- `scripts/descargar_imagenes_actuales.py`: script local para descargar las imagenes desde el inventario.
+
+Nota importante:
+El CDN del sitio entrega varias imagenes como AVIF aunque la URL termine en .jpg/.png. En este entorno no fue posible guardar directamente esos AVIF desde el descargador, por eso se incluye el inventario completo y un script local para descargarlas/conservarlas en tu equipo.
+
+Fuente principal:
+- https://imsercol.com/
+- https://imsercol.com/servicios-industriales
+- https://imsercol.com/acreditaciones
+- https://imsercol.com/en
+- https://onac.org.co/certificados/23-OIN-020.pdf
