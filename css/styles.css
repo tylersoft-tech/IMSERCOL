@@ -1,28 +1,34 @@
 :root {
-  --font-main: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, Helvetica, sans-serif;
-  --color-primary: #06263a;
-  --color-primary-2: #0b5d7a;
-  --color-accent: #28b8d8;
+  --font-main: Arial, Helvetica, sans-serif;
+  --font-display: Impact, "Arial Black", "Arial Narrow", Arial, Helvetica, sans-serif;
+  --color-primary: #073b63;
+  --color-primary-2: #005b94;
+  --color-accent: #e30613;
   --color-warning: #f6b73c;
-  --color-bg: #f8fafc;
-  --color-text: #081a24;
+  --color-bg: #f5f7fa;
+  --color-text: #111827;
   --color-muted: #64748b;
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 24px;
-  --shadow-soft: 0 12px 35px rgba(6, 38, 58, .12);
-  --ink: #081a24;
-  --petrol: #06263a;
-  --petrol-2: #0b5d7a;
-  --cyan: #28b8d8;
-  --steel: #1e2933;
+  --shadow-soft: 0 12px 35px rgba(7, 59, 99, .12);
+  --ink: #111827;
+  --petrol: #073b63;
+  --petrol-2: #005b94;
+  --cyan: #e30613;
+  --red: #e30613;
+  --red-dark: #a90016;
+  --blue: #004b83;
+  --blue-dark: #06365d;
+  --metal: #d8d8d8;
+  --steel: #252a31;
   --muted: #64748b;
-  --line: #d9e2ea;
-  --paper: #f8fafc;
+  --line: #d8dde5;
+  --paper: #f5f7fa;
   --white: #ffffff;
   --warning: #f6b73c;
   --ok: #1fa97a;
-  --shadow: 0 24px 70px rgba(8, 26, 36, .16);
+  --shadow: 0 24px 70px rgba(17, 24, 39, .16);
   --radius: 8px;
   --max: 1180px;
   --header: 78px;
@@ -239,13 +245,21 @@ button {
   backdrop-filter: blur(18px);
 }
 
+.mega-panel__inner--portfolio {
+  grid-template-columns: minmax(250px, .78fr) minmax(430px, 1.35fr) minmax(260px, .82fr);
+  gap: 18px;
+  padding: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .98), rgba(245, 247, 250, .98));
+}
+
 .mega-panel__intro {
   padding: 22px;
   border-radius: var(--radius);
   color: var(--white);
   background:
     linear-gradient(130deg, rgba(6, 38, 58, .96), rgba(11, 93, 122, .88)),
-    url("../assets/img/020_servicios-industriales_galeria_Tanques_y_tuberia.jpg") center / cover no-repeat;
+    url("../assets/img/020_servicios-industriales_galeria_Tanques_y_tuberia_industrial.jpg") center / cover no-repeat;
 }
 
 .mega-panel__intro .eyebrow {
@@ -259,6 +273,13 @@ button {
 
 .mega-panel__intro p {
   color: rgba(255, 255, 255, .78);
+}
+
+.mega-panel__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
 }
 
 .mega-kpis {
@@ -290,6 +311,103 @@ button {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--white);
+}
+
+.mega-panel__services,
+.mega-panel__support {
+  min-width: 0;
+}
+
+.mega-panel__services {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--white);
+}
+
+.mega-panel__services h4,
+.mega-quote-note h4 {
+  margin: 0 0 12px;
+  color: var(--blue-dark);
+  font-size: .78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.mega-service-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.mega-service-grid a {
+  display: block;
+  min-height: 112px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  transition: border-color .18s var(--ease), background .18s var(--ease), transform .18s var(--ease);
+}
+
+.mega-service-grid a:hover,
+.mega-service-grid a:focus-visible {
+  border-color: rgba(227, 6, 19, .36);
+  background: #fff;
+  transform: translateY(-1px);
+}
+
+.mega-service-grid strong {
+  display: block;
+  color: var(--blue-dark);
+  font-size: .96rem;
+  line-height: 1.18;
+}
+
+.mega-service-grid span {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: .82rem;
+  line-height: 1.35;
+}
+
+.mega-panel__support {
+  display: grid;
+  gap: 12px;
+}
+
+.mega-quote-note {
+  padding: 16px;
+  border: 1px solid rgba(227, 6, 19, .18);
+  border-radius: var(--radius);
+  background: #fff7f7;
+}
+
+.mega-quote-note span {
+  position: relative;
+  display: block;
+  padding: 9px 0 9px 18px;
+  border-bottom: 1px solid rgba(227, 6, 19, .12);
+  color: var(--steel);
+  font-size: .86rem;
+  font-weight: 800;
+}
+
+.mega-quote-note span:last-child {
+  border-bottom: 0;
+}
+
+.mega-quote-note span::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1.05em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--red);
 }
 
 .mega-panel__decision h4 {
@@ -643,7 +761,8 @@ h3 {
 }
 
 .hero-panel,
-.onac-panel {
+.onac-panel,
+.info-panel {
   background: rgba(255, 255, 255, .95);
   color: var(--ink);
   border: 1px solid rgba(255, 255, 255, .8);
@@ -739,7 +858,7 @@ h3 {
   box-shadow: 0 22px 54px rgba(0, 0, 0, .24);
 }
 
-.floating-card--onac {
+.floating-card--ndt {
   top: 0;
   left: 0;
 }
@@ -941,6 +1060,13 @@ h3 {
 .service-card p,
 .document-card p {
   color: var(--muted);
+}
+
+.card > img {
+  width: 100%;
+  height: 132px;
+  object-fit: contain;
+  margin-bottom: 16px;
 }
 
 .decision-grid {
@@ -1495,7 +1621,16 @@ textarea.is-invalid {
     right: 20px;
     left: auto;
     z-index: 70;
+    color: var(--white);
+    background: var(--petrol);
+    border-color: var(--petrol);
     box-shadow: 0 10px 24px rgba(8, 26, 36, .12);
+  }
+
+  .nav-toggle span,
+  .nav-toggle span::before,
+  .nav-toggle span::after {
+    background: currentColor;
   }
 
   .nav-actions .btn-primary {
@@ -1630,7 +1765,7 @@ textarea.is-invalid {
 
   .hero-media__image,
   .floating-card,
-  .floating-card--onac,
+  .floating-card--ndt,
   .floating-card--iso {
     position: relative;
     inset: auto;
@@ -1721,6 +1856,16 @@ textarea.is-invalid {
     background: rgba(248, 250, 252, .96);
     box-shadow: 0 18px 44px rgba(8, 26, 36, .18);
     backdrop-filter: blur(14px);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(18px);
+    transition: opacity .22s var(--ease), transform .22s var(--ease);
+  }
+
+  .mobile-action-bar.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
   }
 
   .mobile-action-bar .btn {
@@ -1773,5 +1918,351 @@ textarea.is-invalid {
 
   .mobile-action-bar .btn {
     width: 100%;
+  }
+}
+
+/* IMSERCOL portfolio refresh */
+body {
+  background:
+    linear-gradient(90deg, rgba(0, 75, 131, .04), transparent 28%),
+    var(--paper);
+}
+
+.site-header {
+  background: rgba(255, 255, 255, .96);
+}
+
+.brand strong,
+.credential strong,
+.mega-panel__cols h4,
+.mobile-nav-group h4 {
+  color: var(--blue-dark);
+}
+
+.nav-menu a:hover,
+.nav-menu a[aria-current="page"] {
+  color: var(--red);
+  background: rgba(227, 6, 19, .08);
+}
+
+.btn-primary {
+  background: var(--red);
+  border-color: var(--red);
+  box-shadow: 0 14px 28px rgba(227, 6, 19, .22);
+}
+
+.btn-primary:hover {
+  background: var(--red-dark);
+}
+
+.btn-secondary {
+  color: var(--blue-dark);
+}
+
+.hero--portfolio {
+  color: var(--white);
+  background: var(--blue-dark);
+}
+
+.hero--portfolio::before {
+  background:
+    linear-gradient(104deg, rgba(6, 54, 93, .96), rgba(0, 75, 131, .78) 42%, rgba(227, 6, 19, .3)),
+    var(--hero-image, none) center / cover no-repeat;
+}
+
+.hero--portfolio::after {
+  opacity: 1;
+  background:
+    radial-gradient(140% 90% at -20% 8%, transparent 0 36%, rgba(255, 255, 255, .94) 36.2% 41%, transparent 41.2%),
+    radial-gradient(90% 120% at 108% 0%, rgba(227, 6, 19, .82) 0 22%, transparent 22.4%),
+    radial-gradient(92% 120% at -14% 100%, rgba(0, 75, 131, .9) 0 25%, transparent 25.5%);
+  pointer-events: none;
+}
+
+h1,
+h2,
+.hero-title,
+.portfolio-panel h2,
+.principles-list h3 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+h1,
+.hero-title {
+  text-shadow: 0 18px 38px rgba(0, 0, 0, .22);
+}
+
+h2 {
+  color: var(--blue-dark);
+}
+
+.section--dark h2,
+.hero h2,
+.site-footer h3 {
+  color: var(--white);
+}
+
+.eyebrow {
+  color: var(--red);
+}
+
+.section--dark .eyebrow,
+.hero .eyebrow,
+.mega-panel__intro .eyebrow {
+  color: var(--white);
+}
+
+.badge {
+  color: var(--blue-dark);
+  border-color: rgba(0, 75, 131, .24);
+  background: #edf5fb;
+}
+
+.badge-warning {
+  color: #7a4c00;
+  border-color: rgba(246, 183, 60, .36);
+  background: #fff5dc;
+}
+
+.portfolio-panel {
+  position: relative;
+  z-index: 1;
+  padding: clamp(24px, 4vw, 36px);
+  color: var(--ink);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, .98), rgba(216, 216, 216, .88) 52%, rgba(255, 255, 255, .98));
+  border: 1px solid rgba(255, 255, 255, .78);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.portfolio-panel::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 22px;
+  bottom: 22px;
+  width: 7px;
+  background: var(--red);
+}
+
+.panel-kicker {
+  display: inline-flex;
+  margin-bottom: 16px;
+  color: var(--red);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.portfolio-panel h2 {
+  margin-bottom: 14px;
+  font-size: clamp(2rem, 4vw, 3.35rem);
+  line-height: .96;
+  color: var(--blue-dark);
+}
+
+.portfolio-panel p {
+  color: var(--steel);
+}
+
+.portfolio-stats {
+  display: grid;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.portfolio-stats span {
+  display: block;
+  padding: 13px 14px;
+  border-left: 4px solid var(--red);
+  background: rgba(255, 255, 255, .7);
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.portfolio-stats strong {
+  display: block;
+  color: var(--blue-dark);
+  font-size: 1.05rem;
+}
+
+.principles-list {
+  display: grid;
+  gap: 10px;
+  padding: clamp(22px, 3vw, 30px);
+  border-radius: var(--radius);
+  color: var(--ink);
+  background:
+    radial-gradient(120% 90% at 110% -20%, rgba(227, 6, 19, .13), transparent 32%),
+    var(--white);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-soft);
+}
+
+.principles-list h3 {
+  margin-bottom: 8px;
+  color: var(--red);
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+}
+
+.principles-list span {
+  position: relative;
+  display: block;
+  padding-left: 24px;
+  color: var(--steel);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.principles-list span::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .48em;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--red);
+  border-radius: 50%;
+}
+
+.portfolio-service-grid {
+  display: grid;
+  grid-template-columns: 1.15fr repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.service-card--featured {
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, .96), rgba(237, 245, 251, .96)),
+    url("../assets/img/015_servicios-industriales_header_Instalacion_industrial_con_carbon.jpg") center / cover no-repeat;
+}
+
+.service-card h3,
+.card h3,
+.document-card h3,
+.project-card h3 {
+  color: var(--blue-dark);
+}
+
+.card,
+.service-card,
+.document-card,
+.project-card,
+.info-panel,
+.hero-panel,
+.onac-panel {
+  border-radius: var(--radius);
+}
+
+.section--dark {
+  background:
+    radial-gradient(90% 80% at 100% 0%, rgba(227, 6, 19, .22), transparent 36%),
+    linear-gradient(135deg, var(--blue-dark), #031f36);
+}
+
+.media-frame--curve {
+  position: relative;
+}
+
+.media-frame--curve::after {
+  content: "";
+  position: absolute;
+  inset: auto -18px -18px auto;
+  width: 58%;
+  height: 42%;
+  border-right: 20px solid var(--red);
+  border-bottom: 20px solid var(--red);
+  border-radius: 0 0 90px 0;
+  pointer-events: none;
+}
+
+.certificate-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(70px, 1fr));
+  gap: 14px;
+  align-items: center;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--white);
+  box-shadow: var(--shadow-soft);
+}
+
+.certificate-strip img {
+  width: 100%;
+  height: 88px;
+  object-fit: contain;
+}
+
+.certificate-strip .btn {
+  grid-column: 1 / -1;
+}
+
+.quote-card {
+  border-top: 6px solid var(--red);
+}
+
+.contact-panel {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, .96), rgba(237, 245, 251, .92)),
+    url("../assets/img/010_home_contacto_Planta_industrial_rio_rhine.jpg") center / cover no-repeat;
+}
+
+.mega-panel__intro {
+  background:
+    linear-gradient(130deg, rgba(6, 54, 93, .96), rgba(0, 75, 131, .86)),
+    url("../assets/img/020_servicios-industriales_galeria_Tanques_y_tuberia_industrial.jpg") center / cover no-repeat;
+}
+
+.filter-bar button.is-active,
+.back-top {
+  background: var(--red);
+  border-color: var(--red);
+}
+
+.cta-band {
+  background:
+    linear-gradient(92deg, rgba(6, 54, 93, .96), rgba(0, 75, 131, .84), rgba(227, 6, 19, .52)),
+    url("../assets/img/012_home_contacto_Complejo_industrial_al_atardecer.jpg") center / cover no-repeat;
+}
+
+@media (max-width: 1040px) {
+  .portfolio-service-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .portfolio-panel {
+    max-width: 620px;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero--portfolio::after {
+    background:
+      radial-gradient(160% 70% at -60% 2%, transparent 0 34%, rgba(255, 255, 255, .92) 34.2% 39%, transparent 39.2%),
+      radial-gradient(120% 84% at 124% -8%, rgba(227, 6, 19, .72) 0 20%, transparent 20.5%);
+  }
+
+  .portfolio-service-grid,
+  .certificate-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-panel h2,
+  .principles-list h3 {
+    font-size: clamp(1.7rem, 9vw, 2.35rem);
+  }
+
+  .portfolio-panel,
+  .principles-list {
+    padding: 20px;
+  }
+
+  .media-frame--curve::after {
+    display: none;
   }
 }
